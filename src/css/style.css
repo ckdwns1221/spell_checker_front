@@ -4,8 +4,15 @@
 
 @import url("./fonts.css");
 
+
 body {
   min-height: 100vh;
   margin: 0;
+  overflow-x: hidden;
+  background: linear-gradient( #FFFFFF, #E5EAFF);
 }
 
+.nav-bg-scrolled {
+  background-color: rgb(251, 244, 232, 0.1);
+  backdrop-filter: blur(4px);
+} 
