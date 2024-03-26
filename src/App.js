@@ -6,7 +6,7 @@ import Checker from './pages/Checker';
 
 function App() {
   return (
-    <div className="App">
+    <div className="App fontRegular">
       <Routes>
         <Route path="/" element={<Main/>}/>
         <Route path="/upload" element={<Upload/>}/>
