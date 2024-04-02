@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Nav from './../components/Nav';
 
 function Upload() {
-  const [isSpellCheck, setIsSpellCheck] = useState(false);
+
   const [inputType, setInputType] = useState('file'); // 입력 유형 상태 관리 ('file' 또는 'text')
   const [text, setText] = useState('');
   
@@ -33,7 +33,7 @@ function Upload() {
           {/* 중앙 박스 */}
           <div className="flex w-10/12 mt-12 mb-12 ml-20">
             <div className="flex justify-between w-full items-center">
-              {/* 파일 업로드 박스 또는 텍스트 입력 박스 조건부 렌더링 */}
+              {/* 파일 업로드 박스 , 텍스트 입력 박스 조건부 렌더링 */}
               {inputType === 'file' ? (
                 <div className="w-80 h-80 bg-neutral-50 rounded-[10px] border border-dashed border-neutral-400 flex justify-center items-center">
                   <div className="flex flex-col items-center">
@@ -41,21 +41,21 @@ function Upload() {
                     <div className='mt-5 text-neutral-400 text-xl'>Drag file to upload</div>
                   </div>
                 </div>
-              ) : (
+              ) : ( 
                 <div className="flex flex-col items-center">
                   <div className="w-80 flex flex-col bg-white border border-zinc-300">
                       <div className="bg-stone-50 text-center p-2 border border-zinc-300 text-sm">문서 내용</div>
                       <div className="flex flex-col justify-center items-center">
                       <textarea
                           id="textArea"
-                          className="w-full h-64 p-4 bg-white border-none rounded-md" // h-full을 h-64로 조정하여 `textarea`의 높이를 명시적으로 설정
+                          className="w-full h-64 p-4 bg-white border-none rounded-md resize-none"
                           placeholder="텍스트를 입력해주세요."
                           value={text}
                           onChange={textChange}
                         ></textarea>
                       </div>
                   </div>
-                  <div className="text-right w-80 pr-2 pt-2">{`${text.length}/1000자`}</div> {/* 바깥으로 이동 */}
+                  <div className="text-right w-80">{`${text.length}/1000자`}</div>
                 </div>
               )}
               {/* 검사 정보 목록 */}
@@ -73,36 +73,24 @@ function Upload() {
                 </div>
                 {/* 검사 유형 */}
                 <div className="flex items-center pb-4">
-                  <img src='./assets/images/list_disc.png' alt='리스트 원' className='mr-4'/>
-                  <span className="text-lg font-medium">검사 유형</span>
-                  <div className="ml-4 flex items-center">
-                    <input
-                      type="checkbox"
-                      id="spellCheck"
-                      checked={isSpellCheck}
-                      onChange={(e) => setIsSpellCheck(e.target.checked)}
-                      className="ml-2"
-                    />
-                    <label htmlFor="spellCheck" className="ml-2">맞춤법 검사</label>
+                <img src='./assets/images/list_disc.png' alt='리스트 원' className='mr-4'/>
+                <span className="text-lg font-medium">검사 유형</span>
+                {/* 라디오 버튼들을 검사 유형과 같은 높이로 배치 */}
+                <div className="flex ml-6 items-center">
+                  <div className="flex items-center mr-4">
+                    <input type="radio" id="busan" name="spellCheckService" value="busan" />
+                    <label htmlFor="busan" className="ml-2">부산대 맞춤법 검사기</label>
+                  </div>
+                  <div className="flex items-center mr-4">
+                    <input type="radio" id="incruit" name="spellCheckService" value="incruit" />
+                    <label htmlFor="incruit" className="ml-2">인크루트 맞춤법 검사기</label>
+                  </div>
+                  <div className="flex items-center">
+                    <input type="radio" id="jobkorea" name="spellCheckService" value="jobkorea" />
+                    <label htmlFor="jobkorea" className="ml-2">잡코리아 맞춤법 검사기</label>
                   </div>
                 </div>
-                {/* 조건부 라디오 버튼 */}
-                {isSpellCheck && (
-                  <div className="flex ml-28">
-                    <div className="flex items-center mr-4">
-                      <input type="radio" id="naver" name="spellCheckService" value="naver" />
-                      <label htmlFor="naver" className="ml-2">네이버 맞춤법 검사기</label>
-                    </div>
-                    <div className="flex items-center mr-4">
-                      <input type="radio" id="daum" name="spellCheckService" value="daum" />
-                      <label htmlFor="daum" className="ml-2">다음 맞춤법 검사기</label>
-                    </div>
-                    <div className="flex items-center mr-4">
-                      <input type="radio" id="pusan" name="spellCheckService" value="pusan" />
-                      <label htmlFor="pusan" className="ml-2">부산대 맞춤법 검사기</label>
-                    </div>
-                  </div>
-                )}
+              </div>
                 {/* 검사설정 */}
                 <div className="flex items-center w-full mt-5">
                   <div className="flex items-center">
