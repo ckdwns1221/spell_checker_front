@@ -4,10 +4,15 @@ import Nav from './../components/Nav';
 function Upload() {
 
   const [inputType, setInputType] = useState('file'); // 입력 유형 상태 관리 ('file' 또는 'text')
-  const [text, setText] = useState('');
+  const [selectedFile, setSelectedFile] = useState(null); // 선택된 파일 상태 관리
+  const [text, setText] = useState(''); // 텍스트 입력 창 상태
   
   const textChange = (e) => {
     setText(e.target.value);
+  };
+
+  const handleFileChange = (e) => {
+    setSelectedFile(e.target.files[0]); // 선택된 파일 상태 업데이트
   };
 
   return (
@@ -33,14 +38,25 @@ function Upload() {
           {/* 중앙 박스 */}
           <div className="flex w-10/12 mt-12 mb-12 ml-20">
             <div className="flex justify-between w-full items-center">
-              {/* 파일 업로드 박스 , 텍스트 입력 박스 조건부 렌더링 */}
               {inputType === 'file' ? (
-                <div className="w-80 h-80 bg-neutral-50 rounded-[10px] border border-dashed border-neutral-400 flex justify-center items-center">
+                <label className="w-80 h-80 bg-neutral-50 rounded-[10px] border border-dashed border-neutral-400 flex justify-center items-center cursor-pointer">
+                  <input
+                    type="file"
+                    className="hidden"
+                    onChange={handleFileChange}
+                  />
                   <div className="flex flex-col items-center">
-                    <img src='./assets/images/file_upload.png' alt='파일업로드' className='size-16'/>
-                    <div className='mt-5 text-neutral-400 text-xl'>Drag file to upload</div>
+                    {/* 파일이 선택되었을 경우 파일 이름을 표시하거나, 기본 메시지를 보여줍니다. */}
+                    {selectedFile ? (
+                      <div className='text-neutral-400 text-xl'>{selectedFile.name}</div>
+                    ) : (
+                      <>
+                        <img src='./assets/images/file_upload.png' alt='파일업로드' className='size-16'/>
+                        <div className='mt-5 text-neutral-400 text-xl'>Drag file to upload</div>
+                      </>
+                    )}
                   </div>
-                </div>
+                </label>
               ) : ( 
                 <div className="flex flex-col items-center">
                   <div className="w-80 flex flex-col bg-white border border-zinc-300">
@@ -75,7 +91,7 @@ function Upload() {
                 <div className="flex items-center pb-4">
                 <img src='./assets/images/list_disc.png' alt='리스트 원' className='mr-4'/>
                 <span className="text-lg font-medium">검사 유형</span>
-                {/* 라디오 버튼들을 검사 유형과 같은 높이로 배치 */}
+                {/* 라디오 버튼 */}
                 <div className="flex ml-6 items-center">
                   <div className="flex items-center mr-4">
                     <input type="radio" id="busan" name="spellCheckService" value="busan" />
