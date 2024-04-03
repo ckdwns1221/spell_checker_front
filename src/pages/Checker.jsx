@@ -1,31 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import Nav from './../components/Nav'; // 네비게이션 컴포넌트
 import axios from 'axios'; // HTTP 요청을 위한 axios 라이브러리
-import { useNavigate } from 'react-router-dom'; // 페이지 이동을 위한 훅
+import { useNavigate } from 'react-router-dom'; // 페이지 이동
 
 function Checker() {
-  const navigate = useNavigate(); // 페이지 네비게이션 함수
+  const navigate = useNavigate();
   // 컴포넌트 상태 정의
-  const [checkedText, setCheckedText] = useState(''); // 사용자 입력 내용 
-  const [originalText, setOriginalText] = useState(''); // 원본 텍스트
-  const [replacementText, setReplacementText] = useState(''); // 대체 텍스트
+  const [checkedText, setCheckedText] = useState(''); // 전체 텍스트
+  const [originalText, setOriginalText] = useState(''); // 입력 내용 텍스트
+  const [replacementText, setReplacementText] = useState(''); // 대치어
   const [userText, setUserText] = useState(''); // 사용자가 입력한 수정 텍스트
   const [replaceChecked, setReplaceChecked] = useState(false); // 대치어 체크 상태
   const [userChecked, setUserChecked] = useState(false); // 직접수정 체크 상태
 
-  // 컴포넌트 마운트 시 백엔드에서 데이터를 불러옴
+  // 컴포넌트 실행시 백엔드에서 데이터를 불러옴
   useEffect(() => {
     const fetchCheckedText = async () => {
       try {
         const response = await axios.get('백엔드api주소 입력');
         // 성공적으로 데이터를 받아온 경우, 상태 업데이트
-        setCheckedText(response.data.text);
-        setOriginalText(response.data.original);
-        setReplacementText(response.data.replacement);
+        setCheckedText(response.data.text); // 서버에서 받아온 전체 텍스트 
+        setOriginalText(response.data.original); // 서버에서 받아온 입력 내용 텍스트
+        setReplacementText(response.data.replacement); // 서버에서 받아온 대치어 텍스트
       } catch (error) {
         // 데이터 요청 중 오류가 발생한 경우
-        console.error('Axios error:', error);
-        setCheckedText('안녕하세요 맞춤법 검사 퍼블리싱 테스트 입니다. 졸려요 자고 싶어요 기능을 구현해야해요 기능은 얼마나 어려울까');
+        console.error('요청이 전달되지 않았습니다.', error);
+        setCheckedText('전공종합설계');
         setOriginalText('아키텍처');
         setReplacementText('컴퓨터구조의');
       }
@@ -73,7 +73,7 @@ function Checker() {
           {/* 맞춤법 검사 결과 제목 및 결과 표시 영역 */}
           <div className="w-9/12 mt-4">
             <div className="h-16 bg-white border-l-8 border-slate-700 flex items-center pl-6">
-              <div className="text-4xl fontBold">맞춤법 검사 결과</div>
+              <div className="text-4xl fontBold">맞춤법 검사</div>
             </div>
             <div className="flex mt-4">
               {/* 검사된 텍스트를 표시하는 영역 */}
