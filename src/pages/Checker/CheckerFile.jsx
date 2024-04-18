@@ -31,7 +31,7 @@ const CheckerFile = () => {
 
   return (
     <>
-      <div className="w-[70%] bg-white border border-stone-300 scroll overflow-y-scroll">
+      <div className="w-[70%] h-[60vh] bg-white border border-stone-300 scroll overflow-y-scroll">
         <div className="p-4">{checkedText}</div>
       </div>
     </>
