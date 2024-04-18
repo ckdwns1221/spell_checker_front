@@ -1,18 +1,34 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
 @import url("./fonts.css");
 
+#root {
+  max-width: 100vw;
+  min-width: 800px;
+  margin: 0 auto;
+  overflow: hidden;
+}
 
 body {
   min-height: 100vh;
+  padding: 0;
   margin: 0;
-  overflow-x: hidden;
   background: linear-gradient( #FFFFFF, #E5EAFF);
 }
 
+/* nav */
 .nav-bg-scrolled {
   background-color: rgb(251, 244, 232, 0.1);
   backdrop-filter: blur(4px);
 } 
+
+.active, .navItem:hover {
+  border-color: black;
+  color: black;
+}
+
+/* main */
+.textBoxShadow {
+  box-shadow: 8px 10px 4px -4px rgba(94,117,238,0.25);
+}
