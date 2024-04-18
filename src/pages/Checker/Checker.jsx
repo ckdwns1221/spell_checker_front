@@ -21,7 +21,7 @@ function Checker() {
       try {
         const response = await axios.get('백엔드api주소 입력하세요.');
         // 성공적으로 데이터를 받아온 경우, 상태 업데이트
-        setCheckedText(response.data.text); // 서버에서 받아온 전체 텍스트 
+        setCheckedText(response.data.text); // 서버에서 받아온 전체 텍스트
         setOriginalText(response.data.original); // 서버에서 받아온 입력 내용 텍스트
         setReplacementText(response.data.replacement); // 서버에서 받아온 대치어 텍스트
       } catch (error) {
@@ -59,36 +59,29 @@ function Checker() {
 
   return (
     <>
-      <div className='relative min-h-screen'>
+      <div className="relative min-h-screen">
         <Nav /> {/* 상단 네비게이션 바 */}
         <div className="flex justify-center items-center mt-24">
           <div className="w-10/12 bg-white rounded-xl shadow flex flex-col items-center">
             {/* 이전 화면으로 이동하는 버튼 */}
             <div className="w-10/12 flex justify-between items-center my-4">
-              <div 
+              <div
                 className="ml-auto cursor-pointer text-stone-500 text-xl font-bold font-['Inter'] flex items-center"
-                onClick={() => navigate('/upload')}
-              >
-                <img src='./assets/images/prev_arrow.png' alt='이전화면 화살표' className='h-4 mr-2'/>
+                onClick={() => navigate('/upload')}>
+                <img src="./assets/images/prev_arrow.png" alt="이전화면 화살표" className="h-4 mr-2" />
                 이전 화면
               </div>
             </div>
-            <div className='flex justify-center w-11/12 h-[85%]'>
-              <CheckerFile/>
-              <CheckerModify/>
+            <div className="flex justify-center w-11/12 h-[85%]">
+              <CheckerFile />
+              <CheckerModify />
             </div>
             {/* 수정 완료 및 닫기 버튼 */}
             <div className="w-10/12 mt-4 flex justify-end items-center pr-14">
-              <button 
-                className="text-white w-32 h-10 bg-slate-700 fontBold rounded-2xl mr-4"
-                onClick={finishEdit}
-              >
+              <button className="text-white w-32 h-10 bg-slate-700 fontBold rounded-2xl mr-4" onClick={finishEdit}>
                 수정 완료
               </button>
-              <button 
-                className="w-32 h-10 bg-zinc-100 rounded-2xl border border-stone-300"
-                onClick={onClose}
-              >
+              <button className="w-32 h-10 bg-zinc-100 rounded-2xl border border-stone-300" onClick={onClose}>
                 닫기
               </button>
             </div>
@@ -99,4 +92,4 @@ function Checker() {
   );
 }
 
-export default Checker; 
+export default Checker;

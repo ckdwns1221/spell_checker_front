@@ -19,7 +19,7 @@ const CheckerFile = () => {
       try {
         const response = await axios.get('백엔드api주소 입력하세요.');
         // 성공적으로 데이터를 받아온 경우, 상태 업데이트
-        setCheckedText(response.data.text); // 서버에서 받아온 전체 텍스트 
+        setCheckedText(response.data.text); // 서버에서 받아온 전체 텍스트
         setOriginalText(response.data.original); // 서버에서 받아온 입력 내용 텍스트
         setReplacementText(response.data.replacement); // 서버에서 받아온 대치어 텍스트
       } catch (error) {
@@ -54,15 +54,13 @@ const CheckerFile = () => {
     setUserChecked(true); // 직접 수정 체크를 활성화
     setReplaceChecked(false); // 대치어 체크를 비활성화
   };
-  
+
   return (
     <>
-              {/* 검사된 텍스트를 표시하는 영역 */}
-              <div className="w-[70%] bg-white border border-stone-300 overflow-y-scroll">
-                <div className="p-4">
-                  {checkedText}
-                </div>
-              </div>
+      {/* 검사된 텍스트를 표시하는 영역 */}
+      <div className="w-[70%] bg-white border border-stone-300 overflow-y-scroll">
+        <div className="p-4">{checkedText}</div>
+      </div>
     </>
   );
 };
