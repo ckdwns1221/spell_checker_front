@@ -28,7 +28,7 @@ const Nav = ({ scrollRef }) => {
     };
   }, []);
 
-  const navbg = `Nav fixed z-20 top-0 left-0 right-0 flex justify-between items-center py-3 ${ scrolling ? "nav-bg-scrolled" : "" }`;
+  const navbg = `Nav fixed z-20 top-0 left-0 right-0 flex justify-between items-center my-3 ${ scrolling ? "nav-bg-scrolled" : "" }`;
 
   const [navIndex, setNavIndex] = useState(null);
   const navRef = useRef([]);
