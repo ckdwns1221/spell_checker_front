@@ -1,7 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 import './css/style.css';
 import Main from './pages/Main/Main';
-import Upload from './pages/Upload';
+import Upload from './pages/Upload/Upload';
 import Checker from './pages/Checker/Checker';
 
 function App() {

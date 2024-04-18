@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Nav from './../components/Nav';
+import Nav from '../../components/Nav';
 
 function Upload() {
   const [inputType, setInputType] = useState('file'); // 입력 유형 상태 관리 ('file' 또는 'text')
@@ -88,20 +88,20 @@ function Upload() {
                   {/* 라디오 버튼 */}
                   <div className="flex ml-6 items-center">
                     <div className="flex items-center mr-4">
-                      <input type="radio" id="busan" name="spellCheckService" value="busan" />
-                      <label htmlFor="busan" className="ml-2">
+                      <input type="radio" id="BUSAN_UNIV" name="spellCheckService" value="BUSAN_UNIV" />
+                      <label htmlFor="BUSAN_UNIV" className="ml-2">
                         부산대 맞춤법 검사기
                       </label>
                     </div>
                     <div className="flex items-center mr-4">
-                      <input type="radio" id="incruit" name="spellCheckService" value="incruit" />
-                      <label htmlFor="incruit" className="ml-2">
+                      <input type="radio" id="INCRUIT" name="spellCheckService" value="INCRUIT" />
+                      <label htmlFor="INCRUIT" className="ml-2">
                         인크루트 맞춤법 검사기
                       </label>
                     </div>
                     <div className="flex items-center">
-                      <input type="radio" id="jobkorea" name="spellCheckService" value="jobkorea" />
-                      <label htmlFor="jobkorea" className="ml-2">
+                      <input type="radio" id="JOB_KOREA" name="spellCheckService" value="JOB_KOREA" />
+                      <label htmlFor="JOB_KOREA" className="ml-2">
                         잡코리아 맞춤법 검사기
                       </label>
                     </div>
