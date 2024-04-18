@@ -54,11 +54,15 @@ const CheckerFile = () => {
     setUserChecked(true); // 직접 수정 체크를 활성화
     setReplaceChecked(false); // 대치어 체크를 비활성화
   };
+  
   return (
     <>
-      <div className="p-4">
-        {checkedText}
-      </div>
+              {/* 검사된 텍스트를 표시하는 영역 */}
+              <div className="w-[70%] bg-white border border-stone-300 overflow-y-scroll">
+                <div className="p-4">
+                  {checkedText}
+                </div>
+              </div>
     </>
   );
 };
