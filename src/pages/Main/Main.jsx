@@ -1,4 +1,4 @@
-import { React, useRef } from 'react'
+import { React, useRef } from 'react';
 import Nav from '../../components/Nav';
 import BgCircles from '../../components/BgCircles';
 import FirstSection from './FirstSection';
@@ -23,5 +23,5 @@ export default function Main() {
       <Footer ref={scrollRef} />
       <ScrollTop />
     </>
-  )
+  );
 }

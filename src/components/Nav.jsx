@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const DETAIL_NAV = [
@@ -21,14 +21,16 @@ const Nav = ({ scrollRef }) => {
       }
     };
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener('scroll', handleScroll);
 
     return () => {
-      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener('scroll', handleScroll);
     };
   }, []);
 
-  const navbg = `Nav fixed z-20 top-0 left-0 right-0 flex justify-between items-center my-3 ${ scrolling ? "nav-bg-scrolled" : "" }`;
+  const navbg = `Nav fixed z-20 top-0 left-0 right-0 flex justify-between items-center y-3 ${
+    scrolling ? 'nav-bg-scrolled' : ''
+  }`;
 
   const [navIndex, setNavIndex] = useState(null);
   const navRef = useRef([]);
@@ -66,7 +68,7 @@ const Nav = ({ scrollRef }) => {
     };
   }, [scrollRef]);
 
-  const handleNavItemClick = (idx) => {
+  const handleNavItemClick = idx => {
     if (location.pathname === '/') {
       setNavIndex(idx);
     } else {
@@ -78,25 +80,26 @@ const Nav = ({ scrollRef }) => {
   return (
     <>
       <div className={navbg}>
-        <div className='flex justify-between w-10/12 mx-auto mt-4 text-lg'>
-            <Link to="/" onClick={() => {
+        <div className="flex justify-between w-10/12 mx-auto mt-4 text-lg">
+          <Link
+            to="/"
+            onClick={() => {
               window.scrollTo({
-                  top: 0,
-                  behavior: 'smooth',
+                top: 0,
+                behavior: 'smooth',
               });
             }}>
-            <div className='fontBold'>
-              <span className='text-[#5e75ee]'>서식 유지</span> 맞춤법 검사기
+            <div className="fontBold">
+              <span className="text-[#5e75ee]">서식 유지</span> 맞춤법 검사기
             </div>
-          </Link>          
+          </Link>
           <div className="flex justify-between text-base text-[#a9a9a9] my-auto">
             {DETAIL_NAV.map(({ idx, title }) => (
-              <div 
+              <div
                 className={`navItem mx-3 px-1 cursor-pointer ${idx === navIndex ? 'active' : ''}`}
                 key={idx}
                 ref={ref => (navRef.current[idx] = ref)}
-                onClick={() => handleNavItemClick(idx)}
-              >
+                onClick={() => handleNavItemClick(idx)}>
                 {title}
               </div>
             ))}
