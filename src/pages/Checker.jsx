@@ -126,7 +126,7 @@ function Checker() {
                   <button className="text-white w-28 h-9 bg-slate-700 fontBold rounded-2xl">적용</button>
                 </div>
                 </div>
-                <hr class=" w-full border border-gray-200" /> {/* 구역 나누는 선*/}
+                <hr class=" w-full border border-gray-200" />
               </div>
             </div>
           </div>
