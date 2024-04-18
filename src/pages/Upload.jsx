@@ -84,7 +84,7 @@ function Upload() {
                     <input className='ml-10 p-1 h-8 bg-white border border-zinc-400 w-2/4'/>
                   </div>
                   <div className="ml-28 mt-4 text-neutral-400 text-opacity-95 text-xs font-bold">
-                    * 파일 다운 시 작성하신 검사명으로 파일 명이 작성됩니다.
+                    * 파일 다운 시 작성하신 검사명으로 파일 명이 작성됩니다..
                   </div>
                 </div>
                 {/* 검사 유형 */}
