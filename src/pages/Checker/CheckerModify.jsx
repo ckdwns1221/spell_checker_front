@@ -53,73 +53,66 @@ const CheckerModify = () => {
   };
   return (
     <>
-      {/* 입력 내용 및 대치어, 직접수정 */}
-      <div className="w-[30%] bg-white border border-stone-300">
-        <div className="bg-slate-700 h-14">
+      <div className="flex flex-col h-[60vh]">
+        <div className="bg-slate-700 h-14 pb-3 sticky top-0">
           <div className="text-white text-lg pl-5 pt-3 fontSB">수정하기</div>
         </div>
-        <div className="p-4 text-sm scroll overflow-y-scroll">
-          {/* 입력 내용과 원본 텍스트 나란히 배치 */}
-          <div className="flex items-center mb-4">
-            <div className="text-black fontBold mr-4">기존 내용</div>
-            <div className="fontBold text-red-500">{originalText}</div> {/* 원본 텍스트 표시 */}
-          </div>
-          {/* 대치어 라벨과 대치어 텍스트 나란히 배치 */}
-          <div className="flex items-center pt-4">
-            <div className="text-black fontBold mr-9">추천 수정</div>
-            <div className="fontBold ">{replacementText}</div> {/* 대치어 텍스트 표시 */}
-            {replaceChecked ? (
-              // 체크 상태가 true일 때 선택 후 체크 표시를 보여줍니다.
-              <img
-                src="./assets/images/after_check.png"
-                alt="선택 후 체크 표시"
-                onClick={reCheck}
-                className="cursor-pointer ml-auto"
+        <div className="w-full h-full bg-white border-b border-r border-stone-300 scroll overflow-y-scroll">
+          {/* 여기 밑에 div를 map으로 반복하면됨 */}
+          <div className="px-4 pb-1 text-sm">
+            <div className="flex items-center my-2">
+              <div className="text-black fontBold mr-5">기존 내용</div>
+              <div className="fontBold text-red-500">{originalText}</div>
+            </div>
+            <div className="flex items-center my-4">
+              <div className="text-black fontBold mr-5">추천 수정</div>
+              <div className="fontBold ">{replacementText}</div>
+              {replaceChecked ? (
+                <img
+                  src="./assets/images/after_check.png"
+                  alt="선택 후 체크 표시"
+                  onClick={reCheck}
+                  className="cursor-pointer ml-auto w-4 h-4"
+                />
+              ) : (
+                <img
+                  src="./assets/images/before_check.png"
+                  alt="선택 전 체크 표시"
+                  onClick={reCheck}
+                  className="cursor-pointer ml-auto w-4 h-4"
+                />
+              )}
+            </div>
+            <div className="flex my-4">
+              <div className="text-black fontBold mr-4">직접 수정</div>
+              <input
+                type="text"
+                className="pl-1 w-2/3"
+                placeholder="원하는 대치어를 입력하세요."
+                value={userText}
+                onChange={e => setUserText(e.target.value)}
               />
-            ) : (
-              // 체크 상태가 false일 때 선택 전 체크 표시를 보여줍니다.
-              <img
-                src="./assets/images/before_check.png"
-                alt="선택 전 체크 표시"
-                onClick={reCheck}
-                className="cursor-pointer ml-auto"
-              />
-            )}
-          </div>
-          {/* 사용자가 직접 수정할 텍스트 입력하는 부분 */}
-          <div className="flex pt-5">
-            <div className="text-black fontBold mr-4 mt-1">직접 수정</div>
-            <textarea
-              className="p-1 w-2/3 resize-none"
-              placeholder="원하는 대치어를 입력하세요."
-              value={userText}
-              onChange={e => setUserText(e.target.value)}></textarea>
-            {userChecked ? (
-              // 체크 상태가 true일 때 선택 후 체크 표시를 보여줍니다.
-              <div className="w-auto h-auto ml-auto">
+              {userChecked ? (
                 <img
                   src="./assets/images/after_check.png"
                   alt="선택 후 체크 표시"
                   onClick={usCheck}
-                  className="cursor-pointer"
+                  className="cursor-pointer w-4 h-4 ml-auto"
                 />
-              </div>
-            ) : (
-              // 체크 상태가 false일 때 선택 전 체크 표시를 보여줍니다.
-              <div className="w-auto h-auto ml-auto">
+              ) : (
                 <img
                   src="./assets/images/before_check.png"
                   alt="선택 전 체크 표시"
                   onClick={usCheck}
-                  className="cursor-pointer"
+                  className="cursor-pointer w-4 h-4 ml-auto"
                 />
-              </div>
-            )}
+              )}
+            </div>
+            <div className="flex justify-end">
+              <button className="text-white text-xs px-5 py-1.5 bg-slate-700 fontBold rounded-[14px]">적용</button>
+            </div>
+            <hr class="w-full border border-gray-200 my-2" />
           </div>
-          <div className="flex justify-end pt-2">
-            <button className="text-white w-28 h-9 bg-slate-700 fontBold rounded-2xl">적용</button>
-          </div>
-          <hr class=" w-full border border-gray-200 my-4" />
         </div>
       </div>
     </>

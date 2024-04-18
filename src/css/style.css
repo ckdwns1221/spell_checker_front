@@ -36,26 +36,29 @@ body {
 
 /* scroll */
 .scroll::-webkit-scrollbar {
-  width: 8px; /* 스크롤바의 너비 */
+  width: 10px; /* 스크롤바의 너비 */
 }
-
+/* 스크롤 */
 .scroll::-webkit-scrollbar-thumb {
-  height: 3px; /* 스크롤바의 길이 */
-  background: #d9d9d9; /* 스크롤바의 색상 */
+  background: #d9d9d9;
   border-radius: 10px;
+  /* 스크롤바 마진 */
+  background-clip: padding-box;
+  border: 3px solid transparent;
+  border-radius: 8px;
 }
-
+/* 스크롤바 배경 */
 .scroll::-webkit-scrollbar-track {
   background: inherit;
   border-radius: 10px;
 }
-
+/* 스크롤바 위쪽 공백 */
 .scroll::-webkit-scrollbar-button:vertical:start:decrement {
   display: block;
-  height: 20px;
+  height: 4px;
 }
-
+/* 스크롤바 아래쪽 공백 */
 .scroll::-webkit-scrollbar-button:vertical:end:increment {
   display: block;
-  height: 20px;
+  height: 4px;
 }

@@ -61,13 +61,13 @@ function Checker() {
     <>
       <Nav />
       <div className="min-h-screen">
-        <div className="w-10/12 bg-white rounded-xl shadow flex flex-col mx-auto items-center mt-24 h-[95vh] p-4">
+        <div className="w-10/12 bg-white rounded-xl shadow-md flex flex-col mx-auto items-center mt-24 p-4">
           <div className="text-3xl fontBold w-11/12 border-l-8 border-[#303A6E] pl-4 py-3 my-4">맞춤법 검사</div>
-          <div className="flex justify-center w-11/12 h-[70vh] mt-2">
+          <div className="flex justify-center w-11/12 h-full mt-2">
             <CheckerFile />
             <CheckerModify />
           </div>
-          <div className="w-11/12 mt-3 flex justify-end items-center">
+          <div className="w-11/12 mt-4 flex justify-end items-center">
             <button
               className="text-sm text-white w-1/12 py-2 bg-slate-700 fontBold rounded-2xl mr-4"
               onClick={finishEdit}>
@@ -82,5 +82,4 @@ function Checker() {
     </>
   );
 }
-
 export default Checker;
