@@ -2,7 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import './css/style.css';
 import Main from './pages/Main/Main';
 import Upload from './pages/Upload';
-import Checker from './pages/Checker';
+import Checker from './pages/Checker/Checker';
 
 function App() {
   return (
