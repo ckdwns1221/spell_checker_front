@@ -18,7 +18,7 @@ function Upload() {
   return (
     <>
       <Nav />
-      <div className="flex justify-center items-center h-screen">
+      <div className="flex justify-center items-center min-h-screen">
         <div className="w-10/12 h-4/5 bg-white rounded-xl shadow flex flex-col items-center pt-20">
           {/* 문서 업로드 제목 */}
           <div className="w-10/12">

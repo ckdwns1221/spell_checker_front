@@ -34,7 +34,7 @@ const Nav = ({ scrollRef }) => {
   const navRef = useRef([]);
 
   useEffect(() => {
-    scrollRef.current[navIndex]?.scrollIntoView({ behavior: 'smooth' });
+    scrollRef?.current[navIndex]?.scrollIntoView({ behavior: 'smooth' });
     setNavIndex(null);
   }, [scrollRef, navIndex]);
 
@@ -42,10 +42,10 @@ const Nav = ({ scrollRef }) => {
     const changeNavBtnStyle = () => {
       const scrollPosition = window.scrollY + window.innerHeight / 2;
       let isAnyActive = false;
-      scrollRef.current.forEach((ref, idx) => {
+      scrollRef?.current.forEach((ref, idx) => {
         const elementBottom = ref.offsetTop + ref.clientHeight;
         if (ref.offsetTop <= scrollPosition && elementBottom > scrollPosition) {
-          navRef.current.forEach(ref => {
+          navRef?.current.forEach(ref => {
             ref.classList.remove('active');
           });
           navRef.current[idx].classList.add('active');
@@ -53,7 +53,7 @@ const Nav = ({ scrollRef }) => {
         }
       });
       if (!isAnyActive) {
-        navRef.current.forEach(ref => {
+        navRef?.current.forEach(ref => {
           ref.classList.remove('active');
         });
       }
