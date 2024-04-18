@@ -18,13 +18,11 @@ const CheckerModify = () => {
       try {
         const response = await axios.get('백엔드api주소 입력하세요.');
         // 성공적으로 데이터를 받아온 경우, 상태 업데이트
-        setCheckedText(response.data.text); // 서버에서 받아온 전체 텍스트
         setOriginalText(response.data.original); // 서버에서 받아온 입력 내용 텍스트
         setReplacementText(response.data.replacement); // 서버에서 받아온 대치어 텍스트
       } catch (error) {
         // 데이터 요청 중 오류가 발생한 경우
         console.error('요청이 전달되지 않았습니다.', error);
-        setCheckedText('전공종합설계');
         setOriginalText('아키텍처');
         setReplacementText('컴퓨터구조의');
       }
@@ -63,12 +61,12 @@ const CheckerModify = () => {
         <div className="p-4 text-sm scroll overflow-y-scroll">
           {/* 입력 내용과 원본 텍스트 나란히 배치 */}
           <div className="flex items-center mb-4">
-            <div className="text-black fontBold mr-4">입력 내용</div>
+            <div className="text-black fontBold mr-4">기존 내용</div>
             <div className="fontBold text-red-500">{originalText}</div> {/* 원본 텍스트 표시 */}
           </div>
           {/* 대치어 라벨과 대치어 텍스트 나란히 배치 */}
           <div className="flex items-center pt-4">
-            <div className="text-black fontBold mr-9">대치어</div>
+            <div className="text-black fontBold mr-9">추천 수정</div>
             <div className="fontBold ">{replacementText}</div> {/* 대치어 텍스트 표시 */}
             {replaceChecked ? (
               // 체크 상태가 true일 때 선택 후 체크 표시를 보여줍니다.

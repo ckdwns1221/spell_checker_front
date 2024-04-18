@@ -57,37 +57,30 @@ function Checker() {
     setReplaceChecked(false); // 대치어 체크를 비활성화
   };
 
-  return (  
+  return (
     <>
       <Nav />
-      <div className='min-h-screen'>
+      <div className="min-h-screen">
         <div className="w-10/12 bg-white rounded-xl shadow flex flex-col mx-auto items-center mt-24 h-[95vh] p-4">
-          <div className='text-3xl fontBold w-11/12 border-l-8 border-[#303A6E] pl-4 py-3 my-4'>
-            맞춤법 검사
-          </div>
-          <div className='flex justify-center w-11/12 h-[70vh] mt-2'>
-            <CheckerFile/>
-            <CheckerModify/>
+          <div className="text-3xl fontBold w-11/12 border-l-8 border-[#303A6E] pl-4 py-3 my-4">맞춤법 검사</div>
+          <div className="flex justify-center w-11/12 h-[70vh] mt-2">
+            <CheckerFile />
+            <CheckerModify />
           </div>
           <div className="w-11/12 mt-3 flex justify-end items-center">
-            <button 
+            <button
               className="text-sm text-white w-1/12 py-2 bg-slate-700 fontBold rounded-2xl mr-4"
-              onClick={finishEdit}
-            >
+              onClick={finishEdit}>
               수정 완료
             </button>
-            <button 
-              className="text-sm w-1/12 py-2 bg-zinc-100 rounded-2xl border border-stone-300"
-              onClick={onClose}
-            >
+            <button className="text-sm w-1/12 py-2 bg-zinc-100 rounded-2xl border border-stone-300" onClick={onClose}>
               이전 화면
             </button>
           </div>
-          </div>
+        </div>
       </div>
     </>
   );
 }
-export default Checker;
 
-export default Checker; 
+export default Checker;

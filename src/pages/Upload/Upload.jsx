@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Nav from './../components/Nav';
+import Nav from '../../components/Nav';
 
 function Upload() {
   const [inputType, setInputType] = useState('file'); // 입력 유형 상태 관리 ('file' 또는 'text')
