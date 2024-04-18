@@ -1,43 +1,110 @@
-import React from 'react'
-import { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
-export default function Nav() {
-  const [scrolling, setScrolling] = useState(false); // 스크롤 상태를 추적하기 위한 상태 변수
+const DETAIL_NAV = [
+  { idx: 0, title: '서비스 소개' },
+  { idx: 1, title: '이용방법' },
+  { idx: 2, title: '문의하기' },
+];
+
+const Nav = ({ scrollRef }) => {
+  const [scrolling, setScrolling] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    // 스크롤 이벤트 핸들러를 추가
     const handleScroll = () => {
-        if (window.scrollY > 0) {
-            setScrolling(true); // 스크롤 위치가 0px 이상이면 scrolling 상태를 true로 설정
-        } else {
-            setScrolling(false); // 그 외의 경우에는 scrolling 상태를 false로 설정
-        }
+      if (window.scrollY > 0) {
+        setScrolling(true);
+      } else {
+        setScrolling(false);
+      }
     };
 
-    // 컴포넌트가 마운트될 때 스크롤 이벤트 리스너 추가
     window.addEventListener("scroll", handleScroll);
 
-    // 언마운트될 때 스크롤 이벤트 리스너 제거
     return () => {
-        window.removeEventListener("scroll", handleScroll);
-        };
-    }, []);
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
-    // Navbar의 클래스 이름을 동적으로 설정하고 scrolling 상태에 따라 배경색 클래스를 추가
-    const navbg = `Nav fixed z-20 top-0 left-0 right-0 flex justify-between items-center py-3 ${scrolling ? 'nav-bg-scrolled' : ''}`;
+  const navbg = `Nav fixed z-20 top-0 left-0 right-0 flex justify-between items-center py-3 ${ scrolling ? "nav-bg-scrolled" : "" }`;
+
+  const [navIndex, setNavIndex] = useState(null);
+  const navRef = useRef([]);
+
+  useEffect(() => {
+    scrollRef.current[navIndex]?.scrollIntoView({ behavior: 'smooth' });
+    setNavIndex(null);
+  }, [scrollRef, navIndex]);
+
+  useEffect(() => {
+    const changeNavBtnStyle = () => {
+      const scrollPosition = window.scrollY + window.innerHeight / 2;
+      let isAnyActive = false;
+      scrollRef.current.forEach((ref, idx) => {
+        const elementBottom = ref.offsetTop + ref.clientHeight;
+        if (ref.offsetTop <= scrollPosition && elementBottom > scrollPosition) {
+          navRef.current.forEach(ref => {
+            ref.classList.remove('active');
+          });
+          navRef.current[idx].classList.add('active');
+          isAnyActive = true;
+        }
+      });
+      if (!isAnyActive) {
+        navRef.current.forEach(ref => {
+          ref.classList.remove('active');
+        });
+      }
+    };
+
+    window.addEventListener('scroll', changeNavBtnStyle);
+
+    return () => {
+      window.removeEventListener('scroll', changeNavBtnStyle);
+    };
+  }, [scrollRef]);
+
+  const handleNavItemClick = (idx) => {
+    if (location.pathname === '/') {
+      setNavIndex(idx);
+    } else {
+      navigate('/');
+      setNavIndex(idx);
+    }
+  };
 
   return (
     <>
       <div className={navbg}>
         <div className='flex justify-between w-10/12 mx-auto mt-4 text-lg'>
-          <div className='fontBold'><span className='text-[#5e75ee]'>서식 유지</span> 맞춤법 검사기</div>
+            <Link to="/" onClick={() => {
+              window.scrollTo({
+                  top: 0,
+                  behavior: 'smooth',
+              });
+            }}>
+            <div className='fontBold'>
+              <span className='text-[#5e75ee]'>서식 유지</span> 맞춤법 검사기
+            </div>
+          </Link>          
           <div className="flex justify-between text-base text-[#a9a9a9] my-auto">
-            <div className='mx-2 px-2'>서비스소개</div>
-            <div className='mx-2 px-2'>이용방법</div>
-            <div className='mx-2 px-2'>문의하기</div>
+            {DETAIL_NAV.map(({ idx, title }) => (
+              <div 
+                className={`navItem mx-3 px-1 cursor-pointer ${idx === navIndex ? 'active' : ''}`}
+                key={idx}
+                ref={ref => (navRef.current[idx] = ref)}
+                onClick={() => handleNavItemClick(idx)}
+              >
+                {title}
+              </div>
+            ))}
           </div>
         </div>
       </div>
     </>
-  )
-}
+  );
+};
+
+export default Nav;
