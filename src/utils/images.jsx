@@ -11,4 +11,7 @@ export const images = {
 
   // Output
   wordLogo: PATH + '/assets/images/wordLogo.svg',
+
+  /* Checker */
+  Question: PATH + '/assets/images/QuestionMark.png',
 };
