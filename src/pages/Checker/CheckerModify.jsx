@@ -5,43 +5,51 @@ import data from '../../utils/data.json';
 const CheckerModify = () => {
   const navigate = useNavigate();
 
-  // 오류 정보를 저장하기 위한 상태
+  // 오류 정보를 저장할 상태, 오류 텍스트, 추천 수정, 사용자 입력, 체크된 섹션 정보가 있음
   const [errors, setErrors] = useState([]);
 
   useEffect(() => {
-    // 데이터에서 추출할 단락들을 저장할 배열
     const paragraphs = [];
 
-    // 데이터를 순회하며 단락 정보를 추출하는 함수
+    // 데이터를 돌면서 필요한 정보를 추출하는 함수
     const extractParagraphs = item => {
       if (item.type === 'PARAGRAPH') {
         paragraphs.push(item);
       }
       if (item.ibody) {
-        item.ibody.forEach(extractParagraphs);
+        item.ibody.forEach(extractParagraphs); // 내부 요소도 다시 순회
       }
       if (item.table) {
-        item.table.forEach(row => row.forEach(cell => extractParagraphs(cell)));
+        item.table.forEach(row => row.forEach(cell => extractParagraphs(cell))); // 테이블 안의 내용도 순회
       }
     };
 
-    // JSON 데이터의 본문(body)을 순회
+    // 전달받은 데이터의 본문을 순회하면서 시작
     data.body.forEach(extractParagraphs);
 
-    // 필터링하여 오류가 있는 단락만을 선택하고 각 단락에 대한 정보를 설정
+    // 오류가 있는 단락들만 걸러내고, 필요한 정보를 매핑
     const allErrors = paragraphs
       .filter(p => p.errors && p.errors.length > 0)
       .map(p => ({
         originalText: p.errors[0].orgStr, // 원본 텍스트
-        replacementText: p.errors[0].candWord ? p.errors[0].candWord.join(', ') : '', // 수정 추천
-        userText: '', // 사용자 입력을 위한 빈 문자열 초기화
+        replacementText: p.errors[0].candWord ? p.errors[0].candWord.join(', ') : '', // 추천 수정
+        userText: '', // 사용자가 입력할 텍스트
+        checkedSection: null, // 어떤 섹션이 체크됐는지
       }));
 
-    // 상태를 업데이트하여 UI에 표시
+    // 상태 업데이트
     setErrors(allErrors);
   }, []);
 
-  // 사용자의 입력이 변경될 때 호출되는 함수로, 해당 오류의 사용자 입력 상태를 업데이트
+  // 체크박스 토글하는 함수. 선택된 섹션을 수정
+  const toggleCheck = (index, section) => {
+    const updatedErrors = errors.map((error, i) =>
+      i === index ? { ...error, checkedSection: error.checkedSection === section ? null : section } : error,
+    );
+    setErrors(updatedErrors);
+  };
+
+  // 사용자가 텍스트 입력할 때 호출되는 함수. 입력값을 업데이트
   const handleUserTextChange = (index, text) => {
     const updatedErrors = errors.map((error, i) => (i === index ? { ...error, userText: text } : error));
     setErrors(updatedErrors);
@@ -59,10 +67,30 @@ const CheckerModify = () => {
               <div className="flex items-center my-2">
                 <div className="text-black fontBold mr-5">기존 내용</div>
                 <div className="fontBold text-red-500">{error.originalText}</div>
+                <img
+                  src={
+                    error.checkedSection === 'original'
+                      ? './assets/images/after_check.png'
+                      : './assets/images/before_check.png'
+                  }
+                  alt="체크 표시"
+                  onClick={() => toggleCheck(index, 'original')}
+                  className="cursor-pointer ml-auto w-4 h-4"
+                />
               </div>
               <div className="flex items-center my-4">
                 <div className="text-black fontBold mr-5">추천 수정</div>
                 <div className="fontBold">{error.replacementText}</div>
+                <img
+                  src={
+                    error.checkedSection === 'replacement'
+                      ? './assets/images/after_check.png'
+                      : './assets/images/before_check.png'
+                  }
+                  alt="체크 표시"
+                  onClick={() => toggleCheck(index, 'replacement')}
+                  className="cursor-pointer ml-auto w-4 h-4"
+                />
               </div>
               <div className="flex my-4">
                 <div className="text-black fontBold mr-4">직접 수정</div>
@@ -72,6 +100,16 @@ const CheckerModify = () => {
                   placeholder="원하는 대치어를 입력하세요."
                   value={error.userText}
                   onChange={e => handleUserTextChange(index, e.target.value)}
+                />
+                <img
+                  src={
+                    error.checkedSection === 'user'
+                      ? './assets/images/after_check.png'
+                      : './assets/images/before_check.png'
+                  }
+                  alt="체크 표시"
+                  onClick={() => toggleCheck(index, 'user')}
+                  className="cursor-pointer ml-auto w-4 h-4"
                 />
               </div>
               <div className="flex justify-end">
