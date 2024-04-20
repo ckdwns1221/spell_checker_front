@@ -1,7 +1,7 @@
 import React from 'react';
-import data from '../../utils/data.json'; // JSON 파일 임포트
+// import data from '../../utils/data.json'; // JSON 파일 임포트
 
-const CheckerFile = () => {
+const CheckerFile = ({data}) => {
   // 오류가 있는 텍스트를 처리하는 함수
   const renderTextWithErrors = (text, errors) => {
     if (!errors || errors.length === 0) {
@@ -35,6 +35,7 @@ const CheckerFile = () => {
 
   // JSON 데이터에서 필요한 정보를 추출하는 함수
   const renderContent = () => {
+
     return data.body.map((section, index) => {
       if (section.type === 'PARAGRAPH') {
         return <p key={index}>{renderTextWithErrors(section.orgStr, section.errors)}</p>;

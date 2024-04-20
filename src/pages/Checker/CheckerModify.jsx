@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import data from '../../utils/data.json';
+// import data from '../../utils/data.json';
 
-const CheckerModify = () => {
+const CheckerModify = ({data}) => {
   const navigate = useNavigate();
+
 
   // 오류 정보를 저장할 상태, 오류 텍스트, 추천 수정, 사용자 입력, 체크된 섹션 정보가 있음
   const [errors, setErrors] = useState([]);
