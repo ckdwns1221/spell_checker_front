@@ -4,7 +4,7 @@ import data from '../../utils/data.json'; // JSON 파일 임포트
 const CheckerFile = () => {
   // 오류가 있는 텍스트를 처리하는 함수
   const renderTextWithErrors = (text, errors) => {
-    console.log(text)
+
     if (!errors || errors.length === 0) {
       return <span>{text}</span>;
     }
