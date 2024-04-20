@@ -1,9 +1,10 @@
 import React from 'react';
-// import data from '../../utils/data.json'; // JSON 파일 임포트
+import data from '../../utils/data.json'; // JSON 파일 임포트
 
-const CheckerFile = ({data}) => {
+const CheckerFile = () => {
   // 오류가 있는 텍스트를 처리하는 함수
   const renderTextWithErrors = (text, errors) => {
+    console.log(text)
     if (!errors || errors.length === 0) {
       return <span>{text}</span>;
     }
@@ -34,40 +35,41 @@ const CheckerFile = ({data}) => {
   };
 
   // JSON 데이터에서 필요한 정보를 추출하는 함수
-  const renderContent = () => {
-
-    return data.body.map((section, index) => {
-      if (section.type === 'PARAGRAPH') {
-        return <p key={index}>{renderTextWithErrors(section.orgStr, section.errors)}</p>;
-      } else if (section.type === 'TABLE') {
-        return (
-          <table key={index} style={{ width: '100%', border: '1px solid black', padding: '4px' }}>
-            <tbody>
-              {section.table.map((row, rowIndex) => (
-                <tr key={rowIndex}>
-                  {row.map((cell, cellIndex) => (
-                    <td
-                      key={cellIndex}
-                      colSpan={cell.colspan}
-                      rowSpan={cell.rowspan}
-                      style={{ border: '1px solid black', padding: '4px' }}>
-                      {cell.ibody.map((item, itemIndex) => (
-                        <p key={itemIndex}>{renderTextWithErrors(item.orgStr, item.errors)}</p>
-                      ))}
-                    </td>
-                  ))}
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        );
-      }
-    });
+  const renderContent = (section) => {
+    if (section.type === 'PARAGRAPH') {
+      return renderTextWithErrors(section.orgStr, section.errors);
+    } else if (section.type === 'TABLE') {
+      return (
+        <table style={{ width: '100%', border: '1px solid black', padding: '4px' }}>
+          <tbody>
+            {section.table.map((row, rowIndex) => (
+              <tr key={rowIndex}>
+                {row.map((cell, cellIndex) => (
+                  <td
+                    key={cellIndex}
+                    colSpan={cell.colspan}
+                    rowSpan={cell.rowspan}
+                    style={{ border: '1px solid black', padding: '4px' }}>
+                    {cell.ibody.map((item, itemIndex) => (
+                      <p key={itemIndex}>{renderContent(item)}</p>
+                    ))}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      );
+    };
   };
+
+  const renderPage = (data) => {
+    return data.body.map((section, index) => <p key={index}>{renderContent(section)}</p>);
+  }
 
   return (
     <div className="w-[70%] h-[60vh] bg-white border border-stone-300 scroll overflow-y-scroll">
-      <div className="py-4 pl-5 pr-3">{renderContent()}</div>
+      <div className="py-4 pl-5 pr-3">{renderPage(data)}</div>
     </div>
   );
 };
