@@ -1,7 +1,6 @@
 import React from 'react';
-import data from '../../utils/data.json'; // JSON 파일 임포트
 
-const CheckerFile = () => {
+const CheckerFile = ({data}) => {
   // 오류가 있는 텍스트를 처리하는 함수
   const renderTextWithErrors = (text, errors) => {
 

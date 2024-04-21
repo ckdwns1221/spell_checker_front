@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import data from '../../utils/data.json';
 
-const CheckerModify = () => {
+const CheckerModify = ({data}) => {
   const navigate = useNavigate();
 
 

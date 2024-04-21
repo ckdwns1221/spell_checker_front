@@ -5,6 +5,7 @@ import { useNavigate, useLocation } from 'react-router-dom'; // 페이지 이동
 import CheckerFile from './CheckerFile';
 import CheckerModify from './CheckerModify';
 import { images } from '../../utils/images';
+import data from '../../utils/data.json';
 
 function Checker() {
   const navigate = useNavigate();
@@ -14,7 +15,7 @@ function Checker() {
   const [replacementText, setReplacementText] = useState(''); // 대치어
 
   const location = useLocation();
-  const dataFromUpload = location.state?.data;
+  const dataFromUpload = location.state?.data || data;
 
   // useEffect(() => {
   //   if (dataFromUpload) {
