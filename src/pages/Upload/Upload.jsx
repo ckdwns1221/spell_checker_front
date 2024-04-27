@@ -23,31 +23,22 @@ function Upload() {
     setCheckerType(e.target.value);
   };
 
-  // const handleStartCheck = async () => { // 백엔드 통신 함수
-  //   if (inputType === 'file' && selectedFile && checkerType) {
-  //     const formData = new FormData();
-  //     formData.append('file', selectedFile);
-  //     formData.append('type', checkerType);
-
-  //     try {
-  //       const response = await axios.post('localhost:8080/grammar-check/docx/scan', formData, {
-  //         headers: {
-  //           'Content-Type': 'multipart/form-data',
-  //         },
-  //       });
-  //       console.log('Success:', response.data);
-  //       navigate('/checker');
-  //     } catch (error) {
-  //       console.error('Error uploading file:', error);
-  //     }
-  //   } else {
-  //     alert('Please select a file and a checker type.');
-  //   }
-  // };
-
-  const handleStartCheck = () => {
-    // 백엔드랑 통신안하고 넘어가게 해줌
-    navigate('/checker');
+  const handleStartCheck = async () => {
+    if (inputType === 'file' && selectedFile && checkerType) {
+      const formData = new FormData();
+      formData.append('file', selectedFile);
+      formData.append('type', checkerType);
+  
+      try {
+        const response = await axios.post('http://localhost:8080/grammar-check/docx/scan', formData);
+        navigate('/checker', { state: { data: response.data } });
+      } catch (error) {
+        console.error('Error:', error.message);
+        alert('파일과 검사 유형을 선택해주세요.');
+      }
+    } else {
+      alert('파일과 검사 유형을 선택해주세요.');
+    }
   };
 
   const goBack = () => {

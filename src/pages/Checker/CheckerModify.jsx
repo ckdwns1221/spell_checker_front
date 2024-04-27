@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import data from '../../utils/data.json';
 
-const CheckerModify = () => {
+const CheckerModify = ({data}) => {
   const navigate = useNavigate();
+
 
   // 오류 정보를 저장할 상태, 오류 텍스트, 추천 수정, 사용자 입력, 체크된 섹션 정보가 있음
   const [errors, setErrors] = useState([]);
@@ -29,13 +29,14 @@ const CheckerModify = () => {
 
     // 오류가 있는 단락들만 걸러내고, 필요한 정보를 매핑
     const allErrors = paragraphs
-      .filter(p => p.errors && p.errors.length > 0)
-      .map(p => ({
-        originalText: p.errors[0].orgStr, // 원본 텍스트
-        replacementText: p.errors[0].candWord ? p.errors[0].candWord.join(', ') : '', // 추천 수정
+      .filter(p => p.errors && p.errors.length > 0)  // 에러가 있는 문단만 필터링
+      .flatMap(p => p.errors.map(error => ({        // 각 에러를 매핑
+        originalText: error.orgStr, // 원본 텍스트
+        replacementText: error.candWord ? error.candWord.join(', ') : '', // 추천 수정
         userText: '', // 사용자가 입력할 텍스트
         checkedSection: null, // 어떤 섹션이 체크됐는지
-      }));
+      })));
+    
 
     // 상태 업데이트
     setErrors(allErrors);
