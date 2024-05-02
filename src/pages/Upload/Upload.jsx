@@ -28,7 +28,7 @@ function Upload() {
       const formData = new FormData();
       formData.append('file', selectedFile);
       formData.append('type', checkerType);
-  
+
       try {
         const response = await axios.post('http://localhost:8080/grammar-check/docx/scan', formData);
         navigate('/checker', { state: { data: response.data } });

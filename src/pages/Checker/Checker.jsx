@@ -1,31 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import Nav from '../../components/Nav'; // 네비게이션 컴포넌트
-import axios from 'axios'; // HTTP 요청을 위한 axios 라이브러리
 import { useNavigate, useLocation } from 'react-router-dom'; // 페이지 이동
 import CheckerFile from './CheckerFile';
 import CheckerModify from './CheckerModify';
 import { images } from '../../utils/images';
-import data from '../../utils/data.json';
+import Predata from '../../utils/data.json';
 
 function Checker() {
   const navigate = useNavigate();
-  // 컴포넌트 상태 정의
-  const [checkedText, setCheckedText] = useState(''); // 전체 텍스트
-  const [originalText, setOriginalText] = useState(''); // 입력 내용 텍스트
-  const [replacementText, setReplacementText] = useState(''); // 대치어
 
   const location = useLocation();
-  const dataFromUpload = location.state?.data || data;
+  const initialData = location.state?.data || Predata; // 초기 데이터 로드
 
-  // useEffect(() => {
-  //   if (dataFromUpload) {
-  //     setCheckedText(dataFromUpload.text);
-  //     setOriginalText(dataFromUpload.original);
-  //     setReplacementText(dataFromUpload.replacement);
-  //   }
-  // }, [dataFromUpload]);
+  const [data, setData] = useState(initialData);
 
-  // 수정 완료 버튼 클릭 이벤트 핸들러
+  const updateData = newData => {
+    setData(newData); // 상태 업데이트
+  };
+
   const finishEdit = () => {
     navigate('/'); // 홈 페이지로 리디렉션
   };
@@ -51,13 +43,12 @@ function Checker() {
             </div>
           </div>
           <div className="flex justify-center w-11/12 h-full mt-2">
-            <CheckerFile data={dataFromUpload}/>
-            <CheckerModify data={dataFromUpload}/>
+            <CheckerFile data={data} />
+            <CheckerModify data={data} onUpdateData={updateData} />
           </div>
           <div className="w-11/12 mt-4 flex justify-end items-center">
             <button
               className="text-sm text-white w-1/12 py-2 bg-slate-700 fontBold rounded-2xl mr-4"
-              s
               onClick={finishEdit}>
               수정 완료
             </button>
