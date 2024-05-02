@@ -1,42 +1,42 @@
 import React from 'react';
 
-const CheckerFile = ({data}) => {
+const CheckerFile = ({ data }) => {
   // 오류가 있는 텍스트를 처리하는 함수
   const renderTextWithErrors = (text, errors) => {
-
     if (!errors || errors.length === 0) {
       return <span>{text}</span>;
     }
-    const sortedErrors = errors.sort((a, b) => a.start - b.start);
-    let lastIndex = 0;
-    const elements = [];
+    errors.sort((a, b) => a.start - b.start); // 에러를 시작 위치에 따라 정렬
 
-    sortedErrors.forEach(error => {
-      // 오류 이전의 텍스트
+    let lastIndex = 0;
+    const elements = []; // 텍스트 조각들을 담을 배열
+
+    errors.forEach((error, index) => {
+      // 오류 이전의 텍스트 조각
       if (error.start > lastIndex) {
-        elements.push(<span key={lastIndex}>{text.substring(lastIndex, error.start)}</span>);
+        elements.push(<span key={`${index}-before`}>{text.substring(lastIndex, error.start)}</span>);
       }
-      // 오류 텍스트
+      // 오류 텍스트 (스타일 적용)
       elements.push(
         <span key={error.start} style={{ color: 'red', fontWeight: 'bold' }}>
           {text.substring(error.start, error.end)}
         </span>,
       );
-      lastIndex = error.end;
+      lastIndex = error.end; // 마지막 인덱스 업데이트
     });
 
-    // 마지막 오류 뒤의 텍스트
+    // 마지막 오류 이후의 텍스트
     if (lastIndex < text.length) {
-      elements.push(<span key={lastIndex}>{text.substring(lastIndex, text.length)}</span>);
+      elements.push(<span key="after">{text.substring(lastIndex)}</span>);
     }
 
     return elements;
   };
 
-  // JSON 데이터에서 필요한 정보를 추출하는 함수
-  const renderContent = (section) => {
+  // 섹션을 렌더링하는 함수
+  const renderContent = section => {
     if (section.type === 'PARAGRAPH') {
-      return renderTextWithErrors(section.orgStr, section.errors);
+      return <p>{renderTextWithErrors(section.orgStr, section.errors)}</p>;
     } else if (section.type === 'TABLE') {
       return (
         <table style={{ width: '100%', border: '1px solid black', padding: '4px' }}>
@@ -59,12 +59,14 @@ const CheckerFile = ({data}) => {
           </tbody>
         </table>
       );
-    };
+    }
+    return null; // 테이블 및 단락 이외에는 렌더링하지 않음
   };
 
-  const renderPage = (data) => {
-    return data.body.map((section, index) => <p key={index}>{renderContent(section)}</p>);
-  }
+  // 페이지 전체를 렌더링하는 함수
+  const renderPage = data => {
+    return data.body.map((section, index) => <div key={index}>{renderContent(section)}</div>);
+  };
 
   return (
     <div className="w-[70%] h-[60vh] bg-white border border-stone-300 scroll overflow-y-scroll">
