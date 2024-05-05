@@ -6,26 +6,24 @@ const CheckerFile = ({ data }) => {
     if (!errors || errors.length === 0) {
       return <span>{text}</span>;
     }
-    errors.sort((a, b) => a.start - b.start); // 에러를 시작 위치에 따라 정렬
+    errors.sort((a, b) => a.start - b.start);
 
     let lastIndex = 0;
-    const elements = []; // 텍스트 조각들을 담을 배열
+    const elements = [];
 
     errors.forEach((error, index) => {
-      // 오류 이전의 텍스트 조각
+      const color = error.checkedSection ? '#5e75f1' : 'red';
       if (error.start > lastIndex) {
         elements.push(<span key={`${index}-before`}>{text.substring(lastIndex, error.start)}</span>);
       }
-      // 오류 텍스트 (스타일 적용)
       elements.push(
-        <span key={error.start} style={{ color: 'red', fontWeight: 'bold' }}>
+        <span key={error.start} style={{ color, fontWeight: 'bold' }}>
           {text.substring(error.start, error.end)}
         </span>,
       );
-      lastIndex = error.end; // 마지막 인덱스 업데이트
+      lastIndex = error.end;
     });
 
-    // 마지막 오류 이후의 텍스트
     if (lastIndex < text.length) {
       elements.push(<span key="after">{text.substring(lastIndex)}</span>);
     }

@@ -63,7 +63,6 @@ const CheckerModify = ({ data, onUpdateData }) => {
   const applyChanges = () => {
     const updatedData = JSON.parse(JSON.stringify(data)); // 데이터의 깊은 복사
 
-    // updateContent 함수는 실제 데이터 구조 내에서 텍스트 변경을 적용합니다.
     const updateContent = body => {
       body.forEach(section => {
         if (section.type === 'PARAGRAPH' && section.errors.length > 0) {
@@ -75,23 +74,24 @@ const CheckerModify = ({ data, onUpdateData }) => {
               const afterText = originalText.substring(error.end);
               let newText;
 
-              // 사용자가 선택한 섹션에 따라 적용할 텍스트를 결정합니다.
               if (errorToApply.checkedSection === 'original') {
-                newText = errorToApply.originalText; // 원본 텍스트로 복구
+                newText = errorToApply.originalText;
               } else if (errorToApply.checkedSection === 'replacement') {
-                newText = errorToApply.replacementText; // 추천 수정 적용
+                newText = errorToApply.replacementText;
               } else if (errorToApply.checkedSection === 'user') {
-                newText = errorToApply.userText; // 사용자 입력 적용
+                newText = errorToApply.userText;
               } else {
-                newText = originalText.substring(error.start, error.end); // 변경 없음
+                newText = originalText.substring(error.start, error.end);
               }
 
+              // Update the text and adjust indices accordingly
               section.orgStr = beforeText + newText + afterText;
+              error.end = error.start + newText.length; // Update end index based on new text length
+              error.checkedSection = errorToApply.checkedSection; // 새로 추가된 코드
             }
           });
         }
 
-        // 테이블 내용이 있는 경우 재귀적으로 내용을 업데이트합니다.
         if (section.table) {
           section.table.forEach(row => row.forEach(cell => updateContent(cell.ibody)));
         }
